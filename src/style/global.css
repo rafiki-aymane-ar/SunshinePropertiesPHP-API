@@ -1,0 +1,332 @@
+/**
+ * @fileoverview Styles globaux et variables CSS pour le thème
+ * @module style/global
+ * @description
+ * Définit les variables CSS pour les couleurs personnalisables
+ * et les styles globaux de l'application.
+ */
+
+/* ============================================================================
+   VARIABLES CSS - COULEURS PAR DÉFAUT
+   ============================================================================
+   Ces variables peuvent être modifiées dynamiquement via le ThemeCustomizer
+*/
+
+:root {
+  /* Couleurs principales - Thème sombre (par défaut) */
+  --color-primary: #00d4aa;
+  --color-primaryDark: #00997a;
+  --color-secondary: #6366f1;
+  --color-accent: #f59e0b;
+  
+  /* Couleurs de fond */
+  --color-background: #0a0a0a;
+  --color-surface: #1a1a1a;
+  
+  /* Couleurs de texte */
+  --color-text: #ffffff;
+  --color-textSecondary: #a0a0a0;
+  
+  /* Couleurs de bordure */
+  --color-border: rgba(255, 255, 255, 0.1);
+  
+  /* Couleurs d'état */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  /* Ombres */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.3);
+  
+  /* Rayons de bordure */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+}
+
+/* ============================================================================
+   THÈME CLAIR - OPTIMISATIONS SPÉCIFIQUES
+   ============================================================================
+   Styles spécifiques pour améliorer l'apparence en mode clair
+*/
+
+.light-theme {
+  /* Amélioration du contraste pour les éléments en mode clair */
+}
+
+.light-theme .admin-container,
+.light-theme .front-office {
+  background: var(--color-background);
+  color: var(--color-text);
+}
+
+/* Amélioration des ombres en mode clair pour plus de profondeur */
+.light-theme .stat-card,
+.light-theme .content-card,
+.light-theme .property-card,
+.light-theme .agent-card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--color-border);
+}
+
+.light-theme .stat-card:hover,
+.light-theme .content-card:hover,
+.light-theme .property-card:hover,
+.light-theme .agent-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Amélioration des bordures en mode clair */
+.light-theme .admin-sidebar {
+  border-right: 1px solid var(--color-border);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+}
+
+/* ============================================================================
+   RESPONSIVE GLOBAL - RÈGLES COMMUNES
+   ============================================================================
+   Règles responsive communes pour tous les écrans
+*/
+
+/* Amélioration de la lisibilité sur petits écrans */
+@media (max-width: 768px) {
+  * {
+    -webkit-tap-highlight-color: rgba(0, 212, 170, 0.2);
+  }
+  
+  body {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+  
+  h2 {
+    font-size: 1.75rem;
+    line-height: 1.3;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+    line-height: 1.4;
+  }
+  
+  button, .btn {
+    min-height: 44px; /* Taille minimale pour faciliter le clic sur mobile */
+    padding: 0.75rem 1.25rem;
+  }
+  
+  input, textarea, select {
+    font-size: 16px; /* Évite le zoom automatique sur iOS */
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+  
+  h1 {
+    font-size: 1.75rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  h3 {
+    font-size: 1.25rem;
+  }
+  
+  button, .btn {
+    font-size: 0.9rem;
+    padding: 0.625rem 1rem;
+  }
+}
+
+/* Amélioration des inputs en mode clair */
+.light-theme input,
+.light-theme textarea,
+.light-theme select {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.light-theme input:focus,
+.light-theme textarea:focus,
+.light-theme select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+}
+
+/* Amélioration des boutons en mode clair */
+.light-theme .btn-primary {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primaryDark) 100%);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.2);
+}
+
+.light-theme .btn-primary:hover {
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Amélioration des liens en mode clair */
+.light-theme a {
+  color: var(--color-primary);
+}
+
+.light-theme a:hover {
+  color: var(--color-primaryDark);
+}
+
+/* Amélioration de la scrollbar en mode clair */
+.light-theme ::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+
+.light-theme ::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border: 2px solid var(--color-surface);
+}
+
+.light-theme ::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primaryDark);
+}
+
+/* ============================================================================
+   STYLES GLOBAUX
+   ============================================================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* ============================================================================
+   UTILITAIRES POUR LES COULEURS
+   ============================================================================ */
+
+/* Classes utilitaires pour utiliser les couleurs du thème */
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.bg-secondary {
+  background-color: var(--color-secondary);
+}
+
+.bg-surface {
+  background-color: var(--color-surface);
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
+
+.text-secondary {
+  color: var(--color-textSecondary);
+}
+
+.border-primary {
+  border-color: var(--color-primary);
+}
+
+/* ============================================================================
+   ANIMATIONS GLOBALES
+   ============================================================================ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ============================================================================
+   SCROLLBAR PERSONNALISÉE
+   ============================================================================ */
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 5px;
+  transition: background var(--transition-normal);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primaryDark);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) rgba(255, 255, 255, 0.05);
+}
+

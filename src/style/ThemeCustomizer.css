@@ -1,0 +1,101 @@
+/**
+ * @fileoverview Styles pour le composant ThemeCustomizer
+ * @module style/ThemeCustomizer
+ * @description
+ * Styles pour le bouton de bascule entre thème clair et sombre.
+ */
+
+/* ============================================================================
+   BOUTON DE BASCULE DE THÈME
+   ============================================================================ */
+
+.theme-toggle-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  z-index: 9999;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+/* Thème sombre (par défaut) */
+.theme-toggle-button.dark {
+  background: linear-gradient(135deg, var(--color-primary, #00d4aa) 0%, var(--color-primaryDark, #00997a) 100%);
+  color: #000000;
+  box-shadow: 0 4px 20px rgba(0, 212, 170, 0.4);
+}
+
+.theme-toggle-button.dark:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 30px rgba(0, 212, 170, 0.6);
+}
+
+/* Thème clair */
+.theme-toggle-button.light {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  color: #000000;
+  box-shadow: 0 4px 20px rgba(251, 191, 36, 0.4);
+}
+
+.theme-toggle-button.light:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 30px rgba(251, 191, 36, 0.6);
+}
+
+.theme-icon {
+  font-size: 20px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle-button:hover .theme-icon {
+  transform: rotate(20deg) scale(1.1);
+}
+
+.theme-label {
+  white-space: nowrap;
+}
+
+
+/* ============================================================================
+   RESPONSIVE
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .theme-toggle-button {
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .theme-icon {
+    font-size: 18px;
+  }
+
+  .theme-label {
+    display: none;
+  }
+
+  .theme-toggle-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    padding: 0;
+    justify-content: center;
+  }
+}
+

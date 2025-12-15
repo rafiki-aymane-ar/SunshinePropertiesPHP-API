@@ -1,0 +1,150 @@
+/* LoadingSkeleton Component Styles */
+.loading-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+}
+
+.loading-grid.agents-loading {
+  grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+}
+
+@media (max-width: 768px) {
+  .loading-grid.agents-loading {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Property Card Skeleton */
+.property-card-skeleton {
+  background: #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.skeleton-image {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.05) 75%);
+  background-size: 200% 100%;
+  height: 250px;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+
+/* Agent Card Skeleton - Horizontal Layout */
+.agent-card-skeleton {
+  background: #1a1a1a;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.skeleton-avatar {
+  width: 80px;
+  height: 80px;
+  min-width: 80px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.05) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.agent-card-skeleton .skeleton-content {
+  flex: 1;
+  padding: 0;
+}
+
+.skeleton-content {
+  padding: 1.5rem;
+}
+
+.skeleton-line {
+  height: 14px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.05) 75%);
+  background-size: 200% 100%;
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+
+.skeleton-line.short {
+  width: 60%;
+}
+
+.skeleton-line.shorter {
+  width: 40%;
+}
+
+/* Skeleton Stats for Agent Cards */
+.skeleton-stats {
+  display: flex;
+  gap: 2rem;
+  padding: 0 1.5rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.skeleton-stat {
+  width: 60px;
+  height: 50px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.05) 75%);
+  background-size: 200% 100%;
+  border-radius: 6px;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+
+/* Skeleton Actions */
+.skeleton-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 140px;
+}
+
+.skeleton-btn {
+  height: 40px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.05) 75%);
+  background-size: 200% 100%;
+  border-radius: 8px;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .agent-card-skeleton {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .skeleton-stats {
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 0;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .skeleton-actions {
+    width: 100%;
+    flex-direction: row;
+  }
+  
+  .skeleton-btn {
+    flex: 1;
+  }
+}

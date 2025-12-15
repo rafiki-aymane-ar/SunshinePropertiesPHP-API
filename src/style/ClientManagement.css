@@ -1,0 +1,384 @@
+.client-management {
+    background: var(--color-background, #0a0a0a);
+    min-height: 100vh;
+    color: var(--color-text, #ffffff);
+  }
+  
+  .client-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 20px;
+  }
+  
+  .client-header h2 {
+    color: var(--color-text, #ffffff);
+    font-size: 28px;
+    margin: 0;
+  }
+  
+  .client-management .btn-primary {
+    background: linear-gradient(135deg, var(--color-primary, #00d4aa) 0%, var(--color-primaryDark, #00997a) 100%);
+    color: #000;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .client-management .btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 212, 170, 0.4);
+  }
+  
+  .client-management .btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  /* Formulaire */
+  .form-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .form-container {
+    background: var(--color-surface, var(--color-surface, #1a1a1a));
+    border: 1px solid #333;
+    border-radius: 16px;
+    padding: 30px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+  
+  .form-header h3 {
+    color: var(--color-text, #ffffff);
+    margin: 0;
+  }
+  
+  .close-btn {
+    background: none;
+    border: none;
+    color: var(--color-textSecondary, #a0a0a0);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+  }
+  
+  .close-btn:hover {
+    color: var(--color-text, #ffffff);
+  }
+  
+  .client-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group label {
+    color: var(--color-text, #ffffff);
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 12px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background: var(--color-surface, #1a1a1a);
+    color: var(--color-text, #ffffff);
+    font-size: 14px;
+    transition: all 0.3s ease;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary, #00d4aa);
+    box-shadow: 0 0 0 2px rgba(0, 212, 170, 0.1);
+  }
+  
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: #666;
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+  }
+  
+  .form-actions button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    min-width: 100px;
+  }
+  
+  .form-actions button[type="button"] {
+    background: #333;
+    color: var(--color-text, #ffffff);
+  }
+  
+  .form-actions button[type="button"]:hover {
+    background: #444;
+  }
+  
+  .form-actions button[type="submit"] {
+    background: linear-gradient(135deg, var(--color-primary, #00d4aa) 0%, var(--color-primaryDark, #00997a) 100%);
+    color: #000;
+  }
+  
+  .form-actions button[type="submit"]:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 212, 170, 0.4);
+  }
+  
+  .form-actions button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+  
+  /* Table */
+  .clients-table-container {
+    background: var(--color-surface, var(--color-surface, #1a1a1a));
+    border: 1px solid #333;
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 20px;
+  }
+  
+  .clients-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .clients-table th {
+    background: var(--color-surface, #1a1a1a);
+    color: var(--color-text, #ffffff);
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 1px solid #333;
+    font-size: 14px;
+  }
+  
+  .clients-table td {
+    padding: 15px;
+    border-bottom: 1px solid #222;
+    color: #e0e0e0;
+    font-size: 14px;
+  }
+  
+  .clients-table tr:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  .clients-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .client-name strong {
+    color: var(--color-text, #ffffff);
+    font-size: 14px;
+  }
+  
+  .contact-info div {
+    font-size: 13px;
+    color: var(--color-textSecondary, #a0a0a0);
+    margin-bottom: 2px;
+  }
+  
+  .status-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    color: var(--color-text, #ffffff);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+    display: inline-block;
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  
+  .edit-btn,
+  .delete-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    min-width: 100px;
+  }
+  
+  .edit-btn {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.25) 100%);
+    color: #3b82f6;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+  }
+  
+  .edit-btn:hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(59, 130, 246, 0.35) 100%);
+    border-color: rgba(59, 130, 246, 0.5);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+    transform: translateY(-2px);
+  }
+  
+  .delete-btn {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.25) 100%);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.1);
+  }
+  
+  .delete-btn:hover {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.25) 0%, rgba(239, 68, 68, 0.35) 100%);
+    border-color: rgba(239, 68, 68, 0.5);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+    transform: translateY(-2px);
+  }
+  
+  .light-theme .edit-btn {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.2) 100%);
+    color: #2563eb;
+  }
+  
+  .light-theme .edit-btn:hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.3) 100%);
+  }
+  
+  .light-theme .delete-btn {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.2) 100%);
+    color: #dc2626;
+  }
+  
+  .light-theme .delete-btn:hover {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(239, 68, 68, 0.3) 100%);
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 40px;
+    color: var(--color-textSecondary, #a0a0a0);
+    font-size: 16px;
+  }
+  
+  .no-clients {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--color-textSecondary, #a0a0a0);
+  }
+  
+  .no-clients p {
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .client-header {
+      flex-direction: column;
+      gap: 15px;
+      align-items: flex-start;
+    }
+    
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+    
+    .form-container {
+      padding: 20px;
+      margin: 10px;
+      width: calc(100% - 20px);
+    }
+    
+    .clients-table-container {
+      margin: 10px;
+      overflow-x: auto;
+    }
+    
+    .clients-table {
+      min-width: 800px;
+    }
+    
+    .clients-table th,
+    .clients-table td {
+      padding: 10px;
+    }
+    
+    .action-buttons {
+      flex-direction: column;
+      gap: 5px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .client-header h2 {
+      font-size: 24px;
+    }
+    
+    .form-actions {
+      flex-direction: column;
+    }
+    
+    .form-actions button {
+      width: 100%;
+    }
+  }
