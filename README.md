@@ -88,4 +88,4 @@ RafikiMoukrim_SunshineProperties_PHP_API/
 
 ---
 
-*Développé par l'équipe Sunshine Agency.*
+
