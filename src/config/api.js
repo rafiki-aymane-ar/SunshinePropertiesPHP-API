@@ -18,7 +18,7 @@
  * @constant {string}
  * @default 'http://localhost/RafikiMoukrim_SunshineProperties_PHP_API/backend'
  */
-export const BASE_URL = 'http://localhost/RafikiMoukrim_SunshineProperties_PHP_API/backend';
+export const BASE_URL = 'http://localhost:8000';
 
 // ============================================================================
 // ENDPOINTS API
@@ -34,11 +34,17 @@ export const BASE_URL = 'http://localhost/RafikiMoukrim_SunshineProperties_PHP_A
 export const API_ENDPOINTS = {
   /** Endpoint pour récupérer la liste des propriétés */
   PROPERTIES: `${BASE_URL}/PropertyAPI/get_properties.php`,
-  
+
   /** Endpoint pour récupérer la liste des agents */
   AGENTS: `${BASE_URL}/AgentAPI/get_agents.php`,
-  
+
   /** Endpoint pour récupérer les données du dashboard */
   DASHBOARD: `${BASE_URL}/DashboardAPI/get_dashboard_data.php`,
+
+  /** Endpoint pour récupérer les statistiques de base (publiques) */
+  BASIC_STATS: `${BASE_URL}/DashboardAPI/get_basic_stats.php`,
+
+  /** Endpoint pour récupérer le détail d'une propriété */
+  PROPERTY_DETAIL: `${BASE_URL}/PropertyAPI/get_property.php`,
 };
 

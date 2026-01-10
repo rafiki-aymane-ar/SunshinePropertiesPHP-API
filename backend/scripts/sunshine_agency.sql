@@ -47,6 +47,7 @@ CREATE TABLE IF NOT EXISTS clients (
     civility ENUM('M','Mme','Mlle') DEFAULT 'M',
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
+    uid VARCHAR(191) NULL,
     email VARCHAR(255) NULL,
     phone VARCHAR(20) NULL,
     address TEXT NULL,
@@ -61,6 +62,7 @@ CREATE TABLE IF NOT EXISTS clients (
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     INDEX idx_email_client (email),
+    INDEX idx_uid_client (uid),
     INDEX idx_status_client (status),
     INDEX idx_agent_client (assigned_agent_id),
     CONSTRAINT fk_clients_assigned_agent
@@ -178,9 +180,10 @@ CREATE TABLE IF NOT EXISTS archived_properties (
 -- ======================================================================
 CREATE TABLE IF NOT EXISTS conversations (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    participant1_type ENUM('user','client') NOT NULL,
+    -- Types d'utilisateurs dans la messagerie : 'client' ou 'agent'
+    participant1_type ENUM('client','agent') NOT NULL,
     participant1_id INT NOT NULL,
-    participant2_type ENUM('user','client') NOT NULL,
+    participant2_type ENUM('client','agent') NOT NULL,
     participant2_id INT NOT NULL,
     last_message_id INT NULL,
     last_message_at DATETIME NULL,
@@ -191,9 +194,10 @@ CREATE TABLE IF NOT EXISTS conversations (
 
 CREATE TABLE IF NOT EXISTS messages (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    sender_type ENUM('user','client') NOT NULL,
+    -- Types d'utilisateurs pour les messages : 'client' ou 'agent'
+    sender_type ENUM('client','agent') NOT NULL,
     sender_id INT NOT NULL,
-    receiver_type ENUM('user','client') NOT NULL,
+    receiver_type ENUM('client','agent') NOT NULL,
     receiver_id INT NOT NULL,
     subject VARCHAR(255) NULL,
     content TEXT NOT NULL,

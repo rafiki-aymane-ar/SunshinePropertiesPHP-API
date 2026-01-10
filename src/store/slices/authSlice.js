@@ -19,13 +19,13 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 // ============================================================================
 
 /** URL de base de l'API backend */
-const BASE_URL = 'http://localhost/RafikiMoukrim_SunshineProperties_PHP_API/backend';
+const BASE_URL = 'http://localhost:8000';
 
 // Initial state from localStorage
 const getInitialAuthState = () => {
   const token = localStorage.getItem('auth_token') || localStorage.getItem('token');
   const userData = localStorage.getItem('user_data') || localStorage.getItem('user');
-  
+
   if (token && userData) {
     try {
       return {
@@ -39,7 +39,7 @@ const getInitialAuthState = () => {
       console.error('Error parsing user data:', e);
     }
   }
-  
+
   return {
     isAuthenticated: false,
     token: null,
@@ -55,7 +55,7 @@ export const loginUser = createAsyncThunk(
   async ({ email, password }, { rejectWithValue }) => {
     const apiUrls = [
       `${BASE_URL}/LoginRegisterAPI/login.php`,
-      `http://localhost:80/RafikiMoukrim_SunshineProperties_PHP_API/backend/LoginRegisterAPI/login.php`,
+      // `http://localhost:80/RafikiMoukrim_SunshineProperties_PHP_API/backend/LoginRegisterAPI/login.php`,
     ];
 
     for (const apiUrl of apiUrls) {

@@ -8,18 +8,21 @@ import PropertiesView from './HomePage/views/PropertiesView';
 import AgentsView from './HomePage/views/AgentsView';
 import ContactView from './HomePage/views/ContactView';
 import PropertyDetailView from './HomePage/views/PropertyDetailView';
+import { propertyService } from '../services/propertyService';
+import { agentService } from '../services/agentService';
+import { dashboardService } from '../services/dashboardService';
 import '../style/HomePage.css';
 
-const BASE_URL = 'http://localhost/RafikiMoukrim_SunshineProperties_PHP_API/backend';
+// const BASE_URL = 'http://localhost/RafikiMoukrim_SunshineProperties_PHP_API/backend'; // Not needed anymore
 
 const HomePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  
+
   // États d'authentification
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
-  
+
   // États des données
   const [featuredProperties, setFeaturedProperties] = useState([]);
   const [allProperties, setAllProperties] = useState([]);
@@ -31,7 +34,7 @@ const HomePage = () => {
     clients: 0,
     sales: 0
   });
-  
+
   // États de chargement
   const [loading, setLoading] = useState(true);
   const [propertyLoading, setPropertyLoading] = useState(false);
@@ -44,13 +47,13 @@ const HomePage = () => {
   // Charger les données au chargement et lors des changements de route
   useEffect(() => {
     const path = location.pathname;
-    
+
     // Scroll vers le haut de la page lors du changement de route
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     });
-    
+
     if (path === '/' || path === '') {
       fetchHomeData();
     } else if (path === '/properties') {
@@ -67,7 +70,7 @@ const HomePage = () => {
   const checkAuth = () => {
     const token = localStorage.getItem('auth_token');
     const userData = localStorage.getItem('user_data');
-    
+
     if (token && userData) {
       setIsAuthenticated(true);
       try {
@@ -107,16 +110,16 @@ const HomePage = () => {
   // Récupérer les propriétés vedettes
   const fetchFeaturedProperties = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/PropertyAPI/get_properties.php?featured=1&limit=6`);
-      const data = await response.json();
-      
-      if (data.success && data.properties) {
-        const formattedProperties = data.properties.map(formatProperty);
+      const properties = await propertyService.getFeaturedProperties(6);
+      if (properties && properties.length > 0) {
+        const formattedProperties = properties.map(formatProperty);
         setFeaturedProperties(formattedProperties);
+      } else {
+        // Fallback demo data if API returns empty
+        setFeaturedProperties(getDemoProperties());
       }
     } catch (error) {
       console.error('Erreur récupération propriétés vedettes:', error);
-      // Données de démonstration en cas d'erreur
       setFeaturedProperties(getDemoProperties());
     }
   };
@@ -125,11 +128,10 @@ const HomePage = () => {
   const fetchAllProperties = async (setLoadingState = false) => {
     if (setLoadingState) setLoading(true);
     try {
-      const response = await fetch(`${BASE_URL}/PropertyAPI/get_properties.php`);
-      const data = await response.json();
-      
-      if (data.success && data.properties) {
-        const formattedProperties = data.properties.map(formatProperty);
+      const properties = await propertyService.getAllProperties();
+
+      if (properties && properties.length > 0) {
+        const formattedProperties = properties.map(formatProperty);
         setAllProperties(formattedProperties);
         console.log('✅ Propriétés chargées pour le chatbot:', formattedProperties.length);
       } else {
@@ -148,11 +150,10 @@ const HomePage = () => {
   const fetchPropertyDetail = async (propertyId) => {
     setPropertyLoading(true);
     try {
-      const response = await fetch(`${BASE_URL}/PropertyAPI/get_property.php?id=${propertyId}`);
-      const data = await response.json();
-      
-      if (data.success && data.property) {
-        setSelectedProperty(formatProperty(data.property));
+      const property = await propertyService.getPropertyById(propertyId);
+
+      if (property) {
+        setSelectedProperty(formatProperty(property));
       } else {
         setSelectedProperty(null);
       }
@@ -167,12 +168,13 @@ const HomePage = () => {
   // Récupérer les agents
   const fetchAgents = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/AgentAPI/get_agents.php`);
-      const data = await response.json();
-      
-      if (data.success && data.agents) {
-        const formattedAgents = data.agents.map(formatAgent);
+      const agentsList = await agentService.getAgents();
+
+      if (agentsList && agentsList.length > 0) {
+        const formattedAgents = agentsList.map(formatAgent);
         setAgents(formattedAgents);
+      } else {
+        setAgents(getDemoAgents());
       }
     } catch (error) {
       console.error('Erreur récupération agents:', error);
@@ -183,30 +185,27 @@ const HomePage = () => {
   // Récupérer les statistiques
   const fetchStats = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/DashboardAPI/get_basic_stats.php`);
-      const data = await response.json();
-      
-      if (data.success && data.stats) {
-        // Utiliser les données réelles du backend
+      const statsData = await dashboardService.getBasicStats();
+
+      if (statsData) {
         setStats({
-          properties: data.stats.properties || 0,
-          agents: data.stats.agents || 0,
-          clients: data.stats.clients || 0,
-          sales: data.stats.appointments || 0 // Utiliser appointments comme transactions
+          properties: statsData.properties || 0,
+          agents: statsData.agents || 0,
+          clients: statsData.clients || 0,
+          sales: statsData.appointments || 0
         });
-        console.log('✅ Statistiques chargées depuis le backend:', data.stats);
+        console.log('✅ Statistiques chargées depuis le backend:', statsData);
       } else {
-        // Si l'API ne retourne pas le format attendu, essayer d'autres formats
+        // Fallback to 0
         setStats({
-          properties: data.total_properties || data.stats?.properties || 0,
-          agents: data.total_agents || data.stats?.agents || 0,
-          clients: data.total_clients || data.stats?.clients || 0,
-          sales: data.total_sales || data.stats?.appointments || 0
+          properties: 0,
+          agents: 0,
+          clients: 0,
+          sales: 0
         });
       }
     } catch (error) {
       console.error('❌ Erreur récupération stats:', error);
-      // En cas d'erreur, garder les valeurs à 0 plutôt que des valeurs fictives
       setStats({
         properties: 0,
         agents: 0,
@@ -406,93 +405,93 @@ const HomePage = () => {
   const getAllPropertiesForChat = () => {
     // Combiner allProperties et featuredProperties pour avoir toutes les propriétés disponibles
     const allProps = [...allProperties];
-    
+
     // Ajouter les propriétés vedettes qui ne sont pas déjà dans allProperties
     featuredProperties.forEach(prop => {
       if (!allProps.find(p => p.id === prop.id)) {
         allProps.push(prop);
       }
     });
-    
+
     // Ajouter la propriété sélectionnée si elle existe
     if (selectedProperty && !allProps.find(p => p.id === selectedProperty.id)) {
       allProps.push(selectedProperty);
     }
-    
+
     console.log('📦 Propriétés disponibles pour le chatbot:', {
       allProperties: allProperties.length,
       featuredProperties: featuredProperties.length,
       total: allProps.length,
       sample: allProps[0]
     });
-    
+
     return allProps;
   };
 
   return (
     <div className="front-office">
-      <Header 
-        isAuthenticated={isAuthenticated} 
-        user={user} 
+      <Header
+        isAuthenticated={isAuthenticated}
+        user={user}
         onLogout={handleLogout}
       />
-      
+
       {/* ChatBot intégré */}
-      <ChatBot 
+      <ChatBot
         properties={getAllPropertiesForChat()}
         onPropertySelect={handlePropertySelectFromChat}
       />
-      
+
       <main className="main-content">
         <Routes>
-          <Route 
-            path="/" 
+          <Route
+            path="/"
             element={
-              <HomeView 
+              <HomeView
                 featuredProperties={featuredProperties}
                 agents={agents}
                 stats={stats}
                 loading={loading}
                 onScrollToSection={scrollToSection}
               />
-            } 
+            }
           />
-          <Route 
-            path="/properties" 
+          <Route
+            path="/properties"
             element={
-              <PropertiesView 
+              <PropertiesView
                 allProperties={allProperties}
                 loading={loading}
               />
-            } 
+            }
           />
-          <Route 
-            path="/property/:id" 
+          <Route
+            path="/property/:id"
             element={
-              <PropertyDetailView 
+              <PropertyDetailView
                 selectedProperty={selectedProperty}
                 loading={propertyLoading}
                 isAuthenticated={isAuthenticated}
                 user={user}
               />
-            } 
+            }
           />
-          <Route 
-            path="/agents" 
+          <Route
+            path="/agents"
             element={
-              <AgentsView 
+              <AgentsView
                 agents={agents}
                 loading={loading}
               />
-            } 
+            }
           />
-          <Route 
-            path="/contact" 
-            element={<ContactView />} 
+          <Route
+            path="/contact"
+            element={<ContactView />}
           />
         </Routes>
       </main>
-      
+
       <Footer />
     </div>
   );

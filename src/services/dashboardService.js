@@ -15,9 +15,9 @@ export const dashboardService = {
           sales: 0
         };
       }
-      
+
       const data = await response.json();
-      
+
       // Retourner uniquement les données réelles de l'API
       // Si les données ne sont pas disponibles, retourner 0
       return {
@@ -35,6 +35,21 @@ export const dashboardService = {
         clients: 0,
         sales: 0
       };
+    }
+  },
+
+  // Récupérer les statistiques de base (publiques)
+  getBasicStats: async () => {
+    try {
+      const response = await fetch(API_ENDPOINTS.BASIC_STATS);
+      if (response.ok) {
+        const data = await response.json();
+        return data.success ? data.stats : null;
+      }
+      return null;
+    } catch (error) {
+      console.error('Erreur de chargement des stats de base:', error);
+      return null;
     }
   },
 };

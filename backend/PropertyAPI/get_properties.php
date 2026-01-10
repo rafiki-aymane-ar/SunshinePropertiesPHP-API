@@ -15,9 +15,12 @@ try {
         throw new Exception("Connexion DB non disponible");
     }
     
-    // Récupérer tous les biens SANS created_by
-    $stmt = $pdo->query("
-        SELECT 
+    // Récupérer les paramètres de filtrage
+    $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 0;
+    $featured = isset($_GET['featured']) && $_GET['featured'] === 'true';
+
+    // Construction de la requête SQL
+    $sql = "SELECT 
             id,
             title,
             description,
@@ -30,8 +33,14 @@ try {
             status,
             created_at
         FROM properties 
-        ORDER BY created_at DESC
-    ");
+        ORDER BY created_at DESC";
+    
+    // Si limit est défini (utilisé pour featured aussi)
+    if ($limit > 0) {
+        $sql .= " LIMIT " . $limit;
+    }
+
+    $stmt = $pdo->query($sql);
     
     $properties = $stmt->fetchAll(PDO::FETCH_ASSOC);
     

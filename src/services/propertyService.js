@@ -7,7 +7,7 @@ export const propertyService = {
       const response = await fetch(`${API_ENDPOINTS.PROPERTIES}?featured=true&limit=${limit}`);
       if (response.ok) {
         const data = await response.json();
-        return Array.isArray(data) ? data : [];
+        return data.success && Array.isArray(data.properties) ? data.properties : [];
       }
       return [];
     } catch (error) {
@@ -34,10 +34,10 @@ export const propertyService = {
   // Récupérer une propriété par ID
   getPropertyById: async (id) => {
     try {
-      const response = await fetch(`${API_ENDPOINTS.PROPERTIES}?id=${id}`);
+      const response = await fetch(`${API_ENDPOINTS.PROPERTY_DETAIL}?id=${id}`);
       if (response.ok) {
         const data = await response.json();
-        return Array.isArray(data) ? data[0] : data;
+        return data.success ? data.property : null;
       }
       return null;
     } catch (error) {
